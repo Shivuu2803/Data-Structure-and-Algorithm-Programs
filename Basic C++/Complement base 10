@@ -1,0 +1,24 @@
+#include <iostream>
+
+int findComplement(int num) 
+{
+    int mask = ~0;  // Initialize the mask with all bits set to 1
+
+    while (num & mask) 
+    {
+        mask <<= 1;  // Left-shift the mask to set the next bit to 1
+    }
+
+    return ~num & ~mask;  // Compute the complement using bitwise NOT and bitwise AND
+}
+
+int main() 
+{
+    int num = 5;
+    int complement = findComplement(num);
+
+    std::cout << "Number: " << num << std::endl;
+    std::cout << "Complement: " << complement << std::endl;
+
+    return 0;
+}
