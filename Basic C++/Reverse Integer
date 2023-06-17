@@ -1,0 +1,23 @@
+#include <iostream>
+
+int reverseInteger(int num) {
+    int reversedNum = 0;
+
+    while (num != 0) {
+        int lastDigit = num % 10;  // Extract the last digit
+        reversedNum = reversedNum * 10 + lastDigit;  // Build the reversed number
+        num /= 10;  // Remove the last digit from the original number
+    }
+
+    return reversedNum;
+}
+
+int main() {
+    int num = 12345;
+    int reversedNum = reverseInteger(num);
+
+    std::cout << "Original number: " << num << std::endl;
+    std::cout << "Reversed number: " << reversedNum << std::endl;
+
+    return 0;
+}
