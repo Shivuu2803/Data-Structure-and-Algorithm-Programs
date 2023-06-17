@@ -1,0 +1,29 @@
+#include <iostream>
+
+int nCrIterative(int n, int r) 
+{
+    if (r > n)
+        return 0;
+
+    int result = 1;
+
+    for (int i = 1; i <= r; i++) 
+    {
+        result *= (n - i + 1);
+        result /= i;
+    }
+
+    return result;
+}
+
+int main() 
+{
+    int n = 5;
+    int r = 2;
+
+    int result = nCrIterative(n, r);
+
+    std::cout << "C(" << n << ", " << r << ") = " << result << std::endl;
+
+    return 0;
+}
