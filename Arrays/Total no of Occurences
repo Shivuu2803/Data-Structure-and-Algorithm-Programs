@@ -1,0 +1,30 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int countOccurrences(const vector<int>& arr, int target) 
+{
+    int count = 0;
+
+    for (int num : arr) 
+    {
+        if (num == target) 
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+int main() 
+{
+    vector<int> arr = {1, 2, 2, 3, 2, 4, 2, 5};
+    int target = 2;
+
+    int occurrences = countOccurrences(arr, target);
+
+    cout << "Total occurrences: " << occurrences << std::endl;
+
+    return 0;
+}
