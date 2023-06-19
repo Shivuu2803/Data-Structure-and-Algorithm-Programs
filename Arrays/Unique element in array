@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int findUniqueElement(const vector<int>& arr) 
+{
+    int result = 0;
+
+    // Perform XOR of all elements in the array
+    for (int num : arr) 
+    {
+        result ^= num;
+    }
+
+    return result;
+}
+
+int main() 
+{
+    vector<int> arr = {1, 2, 2, 3, 1, 4, 4};
+
+    int uniqueElement = findUniqueElement(arr);
+
+    cout << "Unique element: " << uniqueElement << std::endl;
+
+    return 0;
+}
