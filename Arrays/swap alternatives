@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+void swapAlternates(int arr[], int size) 
+{
+    for (int i = 0; i < size - 1; i += 2) 
+    {
+        swap(arr[i], arr[i + 1]);
+    }
+}
+
+void printArray(int arr[], int size) 
+{
+    for (int i = 0; i < size; i++) 
+    {
+        std::cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() 
+{
+    int arr[] = {1, 2, 3, 4, 5, 6};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Original Array: ";
+    printArray(arr, size);
+
+    swapAlternates(arr, size);
+
+    cout << "Array after swapping alternates: ";
+    printArray(arr, size);
+
+    return 0;
+}
