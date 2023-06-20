@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+bool isRotatedArray(const std::vector<int>& arr) 
+{
+    int n = arr.size();
+    int minIndex = 0;
+
+    // Find the index of the minimum element
+    for (int i = 1; i < n; i++) 
+    {
+        if (arr[i] < arr[minIndex]) 
+        {
+            minIndex = i;
+        }
+    }
+
+    // If the minimum index is at the first position, the array is not rotated
+    // Otherwise, it is rotated
+    return (minIndex != 0);
+}
+
+int main() 
+{
+    vector<int> arr1 = {4, 5, 6, 7, 1, 2, 3};
+    vector<int> arr2 = {1, 2, 3, 4, 5, 6, 7};
+
+    if (isRotatedArray(arr1)) {
+        cout << "arr1 is a rotated array.\n";
+    } else {
+        cout << "arr1 is not a rotated array.\n";
+    }
+
+    if (isRotatedArray(arr2)) {
+        cout << "arr2 is a rotated array.\n";
+    } else {
+        cout << "arr2 is not a rotated array.\n";
+    }
+
+    return 0;
+}
