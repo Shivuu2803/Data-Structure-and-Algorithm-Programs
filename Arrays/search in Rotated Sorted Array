@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int search(const vector<int>& nums, int target) 
+{
+    int left = 0;
+    int right = nums.size() - 1;
+
+    while (left <= right) 
+    {
+        int mid = left + (right - left) / 2;
+
+        if (nums[mid] == target) 
+        {
+            return mid;
+        }
+
+        if (nums[left] <= nums[mid]) 
+        {
+            // Left half is sorted
+            if (target >= nums[left] && target < nums[mid]) 
+            {
+                // Target is in the left half
+                right = mid - 1;
+            } else 
+            {
+                // Target is in the right half
+                left = mid + 1;
+            }
+        } else {
+            // Right half is sorted
+            if (target > nums[mid] && target <= nums[right]) 
+            {
+                // Target is in the right half
+                left = mid + 1;
+            } else 
+            {
+                // Target is in the left half
+                right = mid - 1;
+            }
+        }
+    }
+
+    // Target element not found
+    return -1;
+}
+
+int main() 
+{
+    vector<int> nums = {4, 5, 6, 7, 0, 1, 2};
+    int target = 0;
+
+    int index = search(nums, target);
+
+    if (index != -1) 
+    {
+        cout << "Element found at index " << index << std::endl;
+    } else 
+    {
+        cout << "Element not found" << std::endl;
+    }
+
+    return 0;
+}
