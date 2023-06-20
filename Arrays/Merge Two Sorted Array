@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> mergeSortedArrays(vector<int>& arr1, vector<int>& arr2) 
+{
+    vector<int> mergedArray;
+    int n1 = arr1.size();
+    int n2 = arr2.size();
+    int i = 0; // index for arr1
+    int j = 0; // index for arr2
+
+    // Merge elements from arr1 and arr2 in sorted order
+    while (i < n1 && j < n2) 
+    {
+        if (arr1[i] <= arr2[j]) 
+        {
+            mergedArray.push_back(arr1[i]);
+            i++;
+        } else 
+        {
+            mergedArray.push_back(arr2[j]);
+            j++;
+        }
+    }
+
+    // Add remaining elements from arr1 (if any)
+    while (i < n1) 
+    {
+        mergedArray.push_back(arr1[i]);
+        i++;
+    }
+
+    // Add remaining elements from arr2 (if any)
+    while (j < n2) 
+    {
+        mergedArray.push_back(arr2[j]);
+        j++;
+    }
+
+    return mergedArray;
+}
+
+int main() 
+{
+    vector<int> arr1 = {1, 3, 5, 7};
+    vector<int> arr2 = {2, 4, 6, 8};
+
+    cout << "Array 1: ";
+    for (int num : arr1) 
+    {
+        cout << num << " ";
+    }cout<< endl;
+
+    cout << "Array 2: ";
+    for (int num : arr2) 
+    {
+        cout << num << " ";
+    }cout<< endl;
+
+    vector<int> mergedArray = mergeSortedArrays(arr1, arr2);
+
+    cout << "Merged Array: ";
+    for (int num : mergedArray) 
+    {
+        cout << num << " ";
+    }
+
+    return 0;
+}
