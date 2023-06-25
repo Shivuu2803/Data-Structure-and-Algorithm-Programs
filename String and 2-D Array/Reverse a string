@@ -1,0 +1,28 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+string reverseString(string& str) 
+{
+    string reversedStr;
+    int n = str.length();
+
+    // Append characters from the original string in reverse order
+    for (int i = n - 1; i >= 0; i--) 
+    {
+        reversedStr.push_back(str[i]);
+    }
+
+    return reversedStr;
+}
+
+int main() 
+{
+    string str = "Hello, World!";
+    string reversedStr = reverseString(str);
+
+    cout << "Original string: " << str << std::endl;
+    cout << "Reversed string: " << reversedStr << std::endl;
+
+    return 0;
+}
