@@ -1,0 +1,96 @@
+#include <iostream>
+using namespace std;
+
+// Node structure
+struct Node 
+{
+    int data;
+    Node* next;
+};
+
+// Function to insert a new node at the end of the linked list
+void insertAtEnd(Node*& head, int data) 
+{
+    Node* newNode = new Node();
+    newNode->data = data;
+    newNode->next = nullptr;
+
+    if (head == nullptr) 
+    {
+        head = newNode;
+        return;
+    }
+
+    Node* current = head;
+    while (current->next != nullptr) 
+    {
+        current = current->next;
+    }
+
+    current->next = newNode;
+}
+
+// Function to check if the linked list is circular or not
+bool isCircular(Node* head) 
+{
+    if (head == nullptr)
+        return false;
+
+    Node* slow = head;
+    Node* fast = head->next;
+
+    while (fast != nullptr && fast->next != nullptr) 
+    {
+        if (slow == fast)
+            return true;
+
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    return false;
+}
+
+int main() 
+{
+    Node* head = nullptr; // Initially, the list is empty
+
+    // Insert nodes at the end
+    insertAtEnd(head, 1);
+    insertAtEnd(head, 2);
+    insertAtEnd(head, 3);
+    insertAtEnd(head, 4);
+    insertAtEnd(head, 5);
+
+    // Display the list
+    cout << "Linked List: ";
+    Node* current = head;
+    while (current != nullptr) 
+    {
+        cout << current->data << " ";
+        current = current->next;
+    }
+    cout << endl;
+
+    // Check if the list is circular
+    bool isCircularList = isCircular(head);
+    if (isCircularList)
+        cout << "The linked list is circular." << endl;
+    else
+        cout << "The linked list is not circular." << endl;
+
+    // Create a circular list by connecting the last node to the head
+    Node* lastNode = head;
+    while (lastNode->next != nullptr)
+        lastNode = lastNode->next;
+    lastNode->next = head;
+
+    // Check if the list is circular again
+    isCircularList = isCircular(head);
+    if (isCircularList)
+        cout << "The linked list is circular." << endl;
+    else
+        cout << "The linked list is not circular." << endl;
+
+    return 0;
+}
