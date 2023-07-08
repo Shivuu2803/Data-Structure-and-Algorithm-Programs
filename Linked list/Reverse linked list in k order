@@ -1,0 +1,100 @@
+#include <iostream>
+using namespace std;
+
+// Node structure
+struct Node 
+{
+    int data;
+    Node* next;
+};
+
+// Function to insert a new node at the end of the linked list
+void insertAtEnd(Node*& head, int data) 
+{
+    Node* newNode = new Node();
+    newNode->data = data;
+    newNode->next = nullptr;
+
+    if (head == nullptr) 
+    {
+        head = newNode;
+        return;
+    }
+
+    Node* current = head;
+    while (current->next != nullptr) 
+    {
+        current = current->next;
+    }
+
+    current->next = newNode;
+}
+
+// Function to display the linked list
+void displayList(Node* head) 
+{
+    Node* current = head;
+    while (current != nullptr) 
+    {
+        cout << current->data << " ";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+// Function to reverse the linked list in groups of size k
+Node* reverseInK(Node* head, int k) 
+{
+    Node* current = head;
+    Node* prev = nullptr;
+    Node* next = nullptr;
+    int count = 0;
+
+    // Reverse the first k nodes
+    while (current != nullptr && count < k) 
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+        count++;
+    }
+
+    // If there are remaining nodes, recursively reverse them
+    if (next != nullptr)
+    {
+        head->next = reverseInK(next, k);
+    }
+
+    return prev;
+}
+
+int main() 
+{
+    Node* head = nullptr; 
+
+    // Insert nodes at the end
+    insertAtEnd(head, 1);
+    insertAtEnd(head, 2);
+    insertAtEnd(head, 3);
+    insertAtEnd(head, 4);
+    insertAtEnd(head, 5);
+    insertAtEnd(head, 6);
+    insertAtEnd(head, 7);
+    insertAtEnd(head, 8);
+
+    // Display the list
+    cout << "Linked List (Before reversal): ";
+    displayList(head);
+
+    int k = 3; // Group size for reversal
+
+    // Reverse the list in groups of size k
+    head = reverseInK(head, k);
+
+    // Display the reversed list
+    cout << "Linked List (After reversal in groups of " << k << "): ";
+    displayList(head);
+
+    return 0;
+}
