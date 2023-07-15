@@ -1,10 +1,9 @@
 #include <iostream>
 #include <unordered_map>
-#include <vector>
 using namespace std;
 
-// Definition for a binary tree node
-class TreeNode
+// Binary tree node
+class TreeNode 
 {
 public:
     int val;
@@ -19,58 +18,83 @@ public:
     }
 };
 
-TreeNode* buildTreeHelper(const vector<int>& inorder, const vector<int>& postorder,
-                          int inStart, int inEnd, int postStart, int postEnd,
-                          unordered_map<int, int>& indexMap)
+// Utility function to search an element in an inorder array
+int search(int arr[], int start, int end, int value) 
 {
-    if (inStart > inEnd || postStart > postEnd)
+    for (int i = start; i <= end; i++) 
+    {
+        if (arr[i] == value)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// Recursive function to construct binary tree from postorder and inorder traversals
+TreeNode* buildTree(int inorder[], int postorder[], int inStart, int inEnd, int& postIndex, unordered_map<int, int>& map) 
+{
+    if (inStart > inEnd)
+    {
         return NULL;
+    }
 
-    int rootValue = postorder[postEnd];
-    TreeNode* root = new TreeNode(rootValue);
+    // Pick the last element from the postorder traversal as the root
+    int current = postorder[postIndex--];
+    TreeNode* node = new TreeNode(current);
 
-    int rootIndex = indexMap[rootValue];
-    int leftSubtreeSize = rootIndex - inStart;
+    // If this node has no children, return
+    if (inStart == inEnd)
+    {
+        return node;
+    }
 
-    root->left = buildTreeHelper(inorder, postorder, inStart, rootIndex - 1,
-                                 postStart, postStart + leftSubtreeSize - 1, indexMap);
-    root->right = buildTreeHelper(inorder, postorder, rootIndex + 1, inEnd,
-                                  postStart + leftSubtreeSize, postEnd - 1, indexMap);
+    // Find the index of the root node in the inorder traversal
+    int inIndex = map[current];
 
-    return root;
+    // Recursive calls to build the left and right subtrees
+    node->right = buildTree(inorder, postorder, inIndex + 1, inEnd, postIndex, map);
+    node->left = buildTree(inorder, postorder, inStart, inIndex - 1, postIndex, map);
+
+    return node;
 }
 
-TreeNode* buildTree(const vector<int>& inorder, const vector<int>& postorder)
+// Function to build binary tree from inorder and postorder traversals
+TreeNode* buildTreeFromTraversal(int inorder[], int postorder[], int size) 
 {
-    unordered_map<int, int> indexMap;
-    for (int i = 0; i < inorder.size(); i++)
-        indexMap[inorder[i]] = i;
+    unordered_map<int, int> map;
+    for (int i = 0; i < size; i++)
+    {
+        map[inorder[i]] = i;
+    }
 
-    int n = inorder.size();
-    return buildTreeHelper(inorder, postorder, 0, n - 1, 0, n - 1, indexMap);
+    int postIndex = size - 1;
+    return buildTree(inorder, postorder, 0, size - 1, postIndex, map);
 }
 
-// Function to perform inorder traversal of the binary tree
-void inorderTraversal(TreeNode* root)
+// Utility function to do inorder traversal of a binary tree
+void inorderTraversal(TreeNode* node) 
 {
-    if (root == NULL)
+    if (node == NULL)
+    {
         return;
+    }
 
-    inorderTraversal(root->left);
-    cout << root->val << " ";
-    inorderTraversal(root->right);
+    inorderTraversal(node->left);
+    cout << node->val << " ";
+    inorderTraversal(node->right);
 }
 
-int main()
+int main() 
 {
-    vector<int> inorder = {4, 2, 5, 1, 6, 3, 7};
-    vector<int> postorder = {4, 5, 2, 6, 7, 3, 1};
+    int inorder[] = { 4, 8, 2, 5, 1, 6, 3, 7 };
+    int postorder[] = { 8, 4, 5, 2, 6, 7, 3, 1 };
+    int size = sizeof(inorder) / sizeof(inorder[0]);
 
-    TreeNode* root = buildTree(inorder, postorder);
+    TreeNode* root = buildTreeFromTraversal(inorder, postorder, size);
 
-    cout << "Inorder Traversal: ";
+    cout << "Inorder traversal of the constructed tree is: ";
     inorderTraversal(root);
-    cout << endl;
 
     return 0;
 }
