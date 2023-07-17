@@ -41,7 +41,7 @@ public:
     // Recursive function to calculate the height of the binary tree
     int height(TreeNode* node) 
     {
-        if (node == nullptr) 
+        if (node == NULL) 
         {
             return 0;
         }
